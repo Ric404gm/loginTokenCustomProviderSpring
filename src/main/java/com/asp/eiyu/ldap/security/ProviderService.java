@@ -1,4 +1,4 @@
-package com.javainuse.config;
+package com.asp.eiyu.ldap.security;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

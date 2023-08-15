@@ -1,4 +1,5 @@
-package com.javainuse.controller;
+package com.asp.eiyu.ldap.security;
+
 
 import java.util.Objects;
 
@@ -16,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javainuse.config.JwtTokenUtil;
-import com.javainuse.model.JwtRequest;
-import com.javainuse.model.JwtResponse;
 
 @RestController
 @CrossOrigin

@@ -1,4 +1,4 @@
-package com.javainuse.service;
+package com.asp.eiyu.ldap.security;
 
 import java.util.ArrayList;
 

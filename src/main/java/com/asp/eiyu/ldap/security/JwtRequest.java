@@ -1,4 +1,4 @@
-package com.javainuse.model;
+package com.asp.eiyu.ldap.security;
 
 import java.io.Serializable;
 

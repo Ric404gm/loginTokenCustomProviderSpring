@@ -1,4 +1,4 @@
-package com.javainuse.controller;
+package com.asp.eiyu.ldap.security;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
