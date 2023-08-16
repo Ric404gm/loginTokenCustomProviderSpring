@@ -1,19 +1,16 @@
 package com.asp.eiyu.ldap.security;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin()
-public class HelloWorldController {
+public class VersionController {
 
-	@GetMapping({ "/hello" })
+	@GetMapping( "/version" )
 	@ResponseBody
-	public String hello() {
-		return "Hello World";
+	public String  testVersion() throws Exception {
+		return "1.0.0";
 	}
 
 }

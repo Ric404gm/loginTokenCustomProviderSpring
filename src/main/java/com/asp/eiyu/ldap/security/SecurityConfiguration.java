@@ -1,11 +1,13 @@
 package com.asp.eiyu.ldap.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,24 +27,44 @@ public class SecurityConfiguration {
 	@Autowired
 	private ProviderService providerService;
 
-
     @Autowired
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
+    @Value("${aps.login.endpoint}")
+    private   String AUTENTICATE_ENDPOINT ;   
 
+
+
+
+
+    /**
+     * 
+     * @param httpSecurity
+     * @return
+     * @throws Exception
+     *         return httpSecurity.csrf( (c) -> c.disable())
+            .authorizeHttpRequests((request) -> request.requestMatchers(AUTENTICATE_ENDPOINT).permitAll()  Endpoint Autirizado para login
+            .anyRequest().authenticated() ) Cualquier solicitud debe ser autenticada
+            .authenticationProvider(this.authenticationProvider()) Servicio que funge como autenticador que podria cambiar la funcionalidad
+            .addFilterAfter(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)  Filtro por cada peticion http a cual quier endpoint valida credenciales y ayuda a autenticar
+            .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))   
+            .exceptionHandling( (ex) -> ex.authenticationEntryPoint(authenticationEntryPoint) )  Es un componente que ayuda a manejar todos los tipos de error que ocurran al hacer una peticion de autenticacion y cuando no exista pa pagina . 
+            .httpBasic(Customizer.withDefaults())  Enable default Response if not exists page
+            .build();
+
+
+     */    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 
         return httpSecurity.csrf( (c) -> c.disable())
-            .authorizeHttpRequests((request) -> request.requestMatchers("/authenticate").permitAll()
+            .authorizeHttpRequests((request) -> request.requestMatchers(AUTENTICATE_ENDPOINT).permitAll()
             .anyRequest().authenticated() )
             .authenticationProvider(this.authenticationProvider())
-
-            //NotWorking
+            .addFilterAfter(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+            .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))   
             .exceptionHandling( (ex) -> ex.authenticationEntryPoint(authenticationEntryPoint) )
-            //NotWorking
-            .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
+            .build();
 
     } 
 

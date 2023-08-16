@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +17,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenUtil implements Serializable {
 
-	private static final long serialVersionUID = -2550185165626007488L;
 	
 	public static final long JWT_TOKEN_VALIDITY = 5*60*60;
 
-	//@Value("${jwt.secret}") 
-	private String secret ="javainuse";
+	@Value("${asp.login.defualt.user}") 
+	private String secret ;
 
 	public String getUsernameFromToken(String token) {
 		return getClaimFromToken(token, Claims::getSubject);
@@ -59,6 +59,12 @@ public class JwtTokenUtil implements Serializable {
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 
+	public String generateToken(String  userDetailsName) {
+		Map<String, Object> claims = new HashMap<>();
+		return doGenerateToken(claims, userDetailsName);
+	}
+
+
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
 
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
@@ -72,5 +78,9 @@ public class JwtTokenUtil implements Serializable {
 	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	}
+	public Boolean validateToken(String token,String  username) {
+		final String usernameFromtoken = getUsernameFromToken(token);
+		return (usernameFromtoken.equals(username) && !isTokenExpired(token));
 	}
 }
