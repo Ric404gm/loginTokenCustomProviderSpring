@@ -40,8 +40,14 @@ class LdapApplicationTests {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LdapApplicationTests.class);
 
-	private static final String keyAsString =  "bGxhdmVlbnN0cmluZzAxMA=="; //llaveenstring010 a base 64 : https://www.base64encode.org/  
+	//private static final String keyAsString = "bGxhdmVlbnN0cmluZzAxMA=="; //llaveenstring010 a base 64 : https://www.base64encode.org/  
     private static final String ivAsString = "llaveenstring010";
+	//Input  HOLA  cifrado l7UP68c69TPpowhxMvCgYA==  decifrado HOLA
+
+
+	private static final String keyAsString =  "MDEyMzQ1Njc4OTEyMzQ1Ng==";//0123456789123456
+	//private static final String ivAsString = "llaveenstring010";
+
 
 	@Test
 	void contextLoads()  throws Exception{
@@ -52,7 +58,7 @@ class LdapApplicationTests {
 		//SecretKey secretKey = generateKey(128);
 
 		
-		String input = "HOLA";
+		String input = "rich";
 		SecretKey secretKey = decodeBase64ToAESKey(this.keyAsString);
 		
 		LOGGER.info(" Key {} ", secretKey.getEncoded());
