@@ -27,6 +27,11 @@ import org.springframework.core.io.ClassPathResource;
 /*
  * Oficial documentation
  * https://www.baeldung.com/java-aes-encryption-decryption
+ * http://www.java2s.com/example/java-api/javax/crypto/spec/ivparameterspec/ivparameterspec-1-6.html
+ * https://www.baeldung.com/java-encryption-iv 
+ * https://mkyong.com/java/java-aes-encryption-and-decryption/
+ * https://stackoverflow.com/questions/5355466/converting-secret-key-into-a-string-and-vice-versa
+ * 
  */
 
 @SpringBootTest
@@ -35,21 +40,25 @@ class LdapApplicationTests {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LdapApplicationTests.class);
 
-	private static final String  keyAsString =  "llaveenstring010";  
-    
+	private static final String keyAsString =  "bGxhdmVlbnN0cmluZzAxMA=="; //llaveenstring010 a base 64 : https://www.base64encode.org/  
+    private static final String ivAsString = "llaveenstring010";
 
 	@Test
 	void contextLoads()  throws Exception{
 
 
 
-		String input = "admin";
-		SecretKey secretKey = generateKey(128);
+		//String input = "{ \"user\": \"adminnn\", \"password\": \"admin\" }";
+		//SecretKey secretKey = generateKey(128);
+
+		
+		String input = "HOLA";
+		SecretKey secretKey = decodeBase64ToAESKey(this.keyAsString);
 		
 		LOGGER.info(" Key {} ", secretKey.getEncoded());
 		IvParameterSpec ivParameterSpec = generateIv();
 		
-		LOGGER.info(" IV {} ", ivParameterSpec.getIV());
+		LOGGER.info(" IV {} ", ivParameterSpec.getIV().getClass());
 		
 
 
@@ -67,17 +76,19 @@ class LdapApplicationTests {
 	}
 
 	public static SecretKey generateKey(int n) throws NoSuchAlgorithmException {
-		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+		 KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
 		keyGenerator.init(n);
 		SecretKey key = keyGenerator.generateKey();
-		return key;
+		return key; 
+		
 	}
 
 
 	public static IvParameterSpec generateIv() {
 		byte[] iv = new byte[16];
 		new SecureRandom().nextBytes(iv);
-		return new IvParameterSpec(iv);
+		return new  IvParameterSpec(ivAsString.getBytes());
+		//return new IvParameterSpec(iv); 
 	}
 
 
@@ -88,9 +99,9 @@ class LdapApplicationTests {
     
 		Cipher cipher = Cipher.getInstance(algorithm);
 
-		//cipher.init(Cipher.DECRYPT_MODE, key, iv);
+		cipher.init(Cipher.DECRYPT_MODE, key, iv);
 		
-		 cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(keyAsString.getBytes()));
+		 //cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(keyAsString.getBytes()));
 		
 		byte[] plainText = cipher.doFinal(Base64.getDecoder().decode(cipherText));
 		return new String(plainText);
@@ -102,11 +113,45 @@ class LdapApplicationTests {
 	{
     
 		Cipher cipher = Cipher.getInstance(algorithm);
-		//cipher.init(Cipher.ENCRYPT_MODE, key, iv);
-		cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(keyAsString.getBytes()));
+		cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+		//cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(keyAsString.getBytes()));
 
 
 		byte[] cipherText = cipher.doFinal(input.getBytes());
 		return Base64.getEncoder().encodeToString(cipherText);
+	}
+
+	public static SecretKey decodeBase64ToAESKey(final String encodedKey) throws IllegalArgumentException 
+	{
+		try {
+			// throws IllegalArgumentException - if src is not in valid Base64
+			// scheme
+			final byte[] keyData = Base64.getDecoder().decode(encodedKey);
+			final int keysize = keyData.length * Byte.SIZE;
+
+			// this should be checked by a SecretKeyFactory, but that doesn't exist for AES
+			switch (keysize) {
+			case 128:
+			case 192:
+			case 256:
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid key size for AES: " + keysize);
+			}
+
+			if (Cipher.getMaxAllowedKeyLength("AES") < keysize) {
+				// this may be an issue if unlimited crypto is not installed
+				throw new IllegalArgumentException("Key size of " + keysize
+						+ " not supported in this runtime");
+			}
+
+		// throws IllegalArgumentException - if key is empty
+			final SecretKeySpec aesKey = new SecretKeySpec(keyData, "AES");
+			return aesKey;
+		} catch (final NoSuchAlgorithmException e) {
+			// AES functionality is a requirement for any Java SE runtime
+			throw new IllegalStateException(
+					"AES should always be present in a Java SE runtime", e);
+		}
 	}
 }
