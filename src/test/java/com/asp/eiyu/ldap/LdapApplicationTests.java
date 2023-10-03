@@ -21,8 +21,12 @@ import javax.crypto.spec.SecretKeySpec;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
+
+import com.asp.eiyu.ldap.security.AesUtil;
+import com.asp.eiyu.ldap.security.AesUtil.OperationType;
 
 /*
  * Oficial documentation
@@ -41,21 +45,29 @@ class LdapApplicationTests {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LdapApplicationTests.class);
 
     //Input  HOLA  cifrado l7UP68c69TPpowhxMvCgYA==  decifrado HOLA
-
 	//private static final String keyAsString = "bGxhdmVlbnN0cmluZzAxMA=="; //llaveenstring010 a base 64 : https://www.base64encode.org/  
 	//private static final String keyAsString =  "MDEyMzQ1Njc4OTEyMzQ1Ng==";//0123456789123456
 	private static final String keyAsString =  "ZWl5dWtleWFzcDEwMjAyMw==";//eiyukeyasp102023  en base64 debe de tener al menos 24 caracteres
 	private static final String ivAsString = "ZWl5dWtleWFzcA=="; //eiyukeyasp
 	private static final String INPUT_TEST = "rich";
 
+	@Autowired
+	private AesUtil aesUtil;
+
+
 	@Test
 	void contextLoads()  throws Exception{
 
+		String  value  = "admin";
+		
+		assertEquals(value , aesUtil.doOperation(
+				aesUtil.doOperation(value, OperationType.ENCRYPT),
+					 OperationType.DECRYPT)  , " * Test * ");
 
 
-		//String input = "{ \"user\": \"adminnn\", \"password\": \"admin\" }";
-		//SecretKey secretKey = generateKey(128);
 
+
+		/* 
 		
 		String input = INPUT_TEST;
 		SecretKey secretKey = decodeBase64ToAESKey(this.keyAsString);
@@ -65,17 +77,14 @@ class LdapApplicationTests {
 		
 		LOGGER.info(" IV {} ", ivParameterSpec.getIV().getClass());
 		
-
-
-
 		String algorithm = "AES/CBC/PKCS5Padding";
 		String cipherText = encrypt(algorithm, input,secretKey, ivParameterSpec);
 		String plainText = decrypt(algorithm, cipherText, secretKey, ivParameterSpec);
 		
-
-
 		LOGGER.info(" Input  {}  cifrado {}  decifrado {} ",input, cipherText,plainText);
 		assertEquals(input, plainText, " * Test * ");
+
+		*/
 
 
 	}

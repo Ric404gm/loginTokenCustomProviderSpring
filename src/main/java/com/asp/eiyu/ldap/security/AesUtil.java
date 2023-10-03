@@ -31,7 +31,8 @@ public class AesUtil {
 
     private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
 
-    public AesUtil (String  aesKey,String aesIv){
+    
+    public AesUtil ( @Value("${asp.login.aes.key}") String  aesKey, @Value("${asp.login.aes.iv}") String aesIv){
         this.aesKey = aesKey;
         this.aesIv = aesIv;
     }
@@ -41,7 +42,7 @@ public class AesUtil {
     BadPaddingException, IllegalBlockSizeException
     {
         
-        SecretKey secretKey = decodeBase64ToAESKey(this.aesIv);
+        SecretKey secretKey = decodeBase64ToAESKey(this.aesKey);
 		IvParameterSpec ivParameterSpec = new  IvParameterSpec(this.aesIv.getBytes());
         if(operationType.equals(OperationType.ENCRYPT))
         {
