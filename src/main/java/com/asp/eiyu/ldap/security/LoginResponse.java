@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class LoginResponse implements Serializable {
 
-	private  String jwttoken;
+	private  String token;
 
-	public LoginResponse(String jwttoken) {
-		this.jwttoken = jwttoken;
+	public LoginResponse(String token) {
+		this.token = token;
 	}
 
 }

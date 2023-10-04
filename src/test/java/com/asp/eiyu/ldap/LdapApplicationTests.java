@@ -47,9 +47,11 @@ class LdapApplicationTests {
     //Input  HOLA  cifrado l7UP68c69TPpowhxMvCgYA==  decifrado HOLA
 	//private static final String keyAsString = "bGxhdmVlbnN0cmluZzAxMA=="; //llaveenstring010 a base 64 : https://www.base64encode.org/  
 	//private static final String keyAsString =  "MDEyMzQ1Njc4OTEyMzQ1Ng==";//0123456789123456
+	
+	
 	private static final String keyAsString =  "ZWl5dWtleWFzcDEwMjAyMw==";//eiyukeyasp102023  en base64 debe de tener al menos 24 caracteres
 	private static final String ivAsString = "ZWl5dWtleWFzcA=="; //eiyukeyasp
-	private static final String INPUT_TEST = "rich";
+	private static final String INPUT_TEST = "$2a$12$qR05mZYgmxNamlNKu1JWB..6ygypNqfVL3N5t5l2IdsAqwnoOC.t.";
 
 	@Autowired
 	private AesUtil aesUtil;
@@ -58,16 +60,15 @@ class LdapApplicationTests {
 	@Test
 	void contextLoads()  throws Exception{
 
+
+		/* 
 		String  value  = "admin";
-		
 		assertEquals(value , aesUtil.doOperation(
 				aesUtil.doOperation(value, OperationType.ENCRYPT),
 					 OperationType.DECRYPT)  , " * Test * ");
+		*/
 
-
-
-
-		/* 
+ 
 		
 		String input = INPUT_TEST;
 		SecretKey secretKey = decodeBase64ToAESKey(this.keyAsString);
@@ -84,7 +85,7 @@ class LdapApplicationTests {
 		LOGGER.info(" Input  {}  cifrado {}  decifrado {} ",input, cipherText,plainText);
 		assertEquals(input, plainText, " * Test * ");
 
-		*/
+		
 
 
 	}

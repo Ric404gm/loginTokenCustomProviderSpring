@@ -15,12 +15,15 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AesUtil {
 
+    private static final  Logger LOGGER = LoggerFactory.getLogger(AesUtil.class);
 
     @Value("${asp.login.aes.key}")
     private final String  aesKey;
@@ -41,9 +44,10 @@ public class AesUtil {
     InvalidAlgorithmParameterException, InvalidKeyException,
     BadPaddingException, IllegalBlockSizeException
     {
-        
         SecretKey secretKey = decodeBase64ToAESKey(this.aesKey);
 		IvParameterSpec ivParameterSpec = new  IvParameterSpec(this.aesIv.getBytes());
+        LOGGER.info(" Aesutiloperation: key{} , iv{} , operation{}  , text{} ",this.aesKey,this.aesIv,operationType,text);
+
         if(operationType.equals(OperationType.ENCRYPT))
         {
             return this.encrypt(this.ALGORITHM, text, secretKey, ivParameterSpec);
