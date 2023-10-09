@@ -1,4 +1,4 @@
-package com.asp.eiyu.ldap.security;
+package com.asp.eiyu.ldap.security.security;
 
 import java.util.ArrayList;
 
@@ -26,13 +26,13 @@ public class JwtUserDetailsService implements UserDetailsService {
 	private  String password;
 
 
-	/* 
-	if ("javainuse".equals(username)) {
+	/**
+	 * if ("javainuse".equals(username)) {
 		return new User("javainuse", "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",
 				new ArrayList<>());
 	} else {
 		throw new UsernameNotFoundException("User not found with username: " + username);
-	} */
+	} */ 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

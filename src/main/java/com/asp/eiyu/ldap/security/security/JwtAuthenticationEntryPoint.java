@@ -1,11 +1,10 @@
-package com.asp.eiyu.ldap.security;
+package com.asp.eiyu.ldap.security.security;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -23,18 +22,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
 
 	
-    @Autowired
-    @Qualifier("handlerExceptionResolver")
-    private HandlerExceptionResolver resolver;
+  @Autowired
+  @Qualifier("handlerExceptionResolver")
+  private HandlerExceptionResolver resolver;
 
-    /*
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) 
-      throws IOException, ServletException {
-        resolver.resolveException(request, response, null, authException);
-    } */
-
-    
+   
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException {

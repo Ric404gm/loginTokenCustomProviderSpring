@@ -1,4 +1,4 @@
-package com.asp.eiyu.ldap.security;
+package com.asp.eiyu.ldap.security.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
@@ -23,6 +22,16 @@ public class ProviderService   implements AuthenticationProvider{
 
     /*
      * Add your service validation  if  is ok  ? return populated UsernamePasswordAuthenticationToken  else can be return null for unauthorized
+     * 
+     *  Object username = authentication.getPrincipal();
+        Object password = authentication.getCredentials();
+        
+         UsernamePasswordAuthenticationToken user = 
+            new  UsernamePasswordAuthenticationToken(username, password,
+                 AuthorityUtils.createAuthorityList("ROLE_USER")); 
+        //userDetailsService.loadUserByUsername(null)
+        //user.setDetails(authentication.getDetails());
+        return user;
      */
 
     @Override

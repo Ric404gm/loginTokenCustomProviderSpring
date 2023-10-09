@@ -25,8 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 
-import com.asp.eiyu.ldap.security.AesUtil;
-import com.asp.eiyu.ldap.security.AesUtil.OperationType;
+import com.asp.eiyu.ldap.security.utils.AesUtil;
+import com.asp.eiyu.ldap.security.utils.AesUtil.OperationType;
 
 /*
  * Oficial documentation

@@ -1,4 +1,4 @@
-package com.asp.eiyu.ldap.security;
+package com.asp.eiyu.ldap.security.controller;
 
 
 import java.util.Objects;
@@ -18,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.asp.eiyu.ldap.security.AesUtil.OperationType;
+import com.asp.eiyu.ldap.security.dto.LoginRequest;
+import com.asp.eiyu.ldap.security.dto.LoginResponse;
+import com.asp.eiyu.ldap.security.utils.AesUtil;
+import com.asp.eiyu.ldap.security.utils.JwtTokenUtil;
+import com.asp.eiyu.ldap.security.utils.AesUtil.OperationType;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 public class JwtAuthenticationController {
 
 	@Autowired

@@ -1,4 +1,4 @@
-package com.asp.eiyu.ldap.security;
+package com.asp.eiyu.ldap.security.utils;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;

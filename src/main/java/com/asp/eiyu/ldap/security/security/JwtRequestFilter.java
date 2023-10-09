@@ -1,8 +1,7 @@
-package com.asp.eiyu.ldap.security;
+package com.asp.eiyu.ldap.security.security;
 
 import java.io.IOException;
 
-import javax.naming.AuthenticationException;
 
 /* 
 import javax.servlet.FilterChain;
@@ -21,6 +20,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.asp.eiyu.ldap.security.utils.JwtTokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
