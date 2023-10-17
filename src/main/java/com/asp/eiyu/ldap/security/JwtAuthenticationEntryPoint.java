@@ -1,4 +1,4 @@
-package com.asp.eiyu.ldap.security.security;
+package com.asp.eiyu.ldap.security;
 
 import java.io.IOException;
 import java.io.Serializable;

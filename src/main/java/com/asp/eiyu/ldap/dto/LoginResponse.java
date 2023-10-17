@@ -1,4 +1,4 @@
-package com.asp.eiyu.ldap.security.dto;
+package com.asp.eiyu.ldap.dto;
 
 import java.io.Serializable;
 

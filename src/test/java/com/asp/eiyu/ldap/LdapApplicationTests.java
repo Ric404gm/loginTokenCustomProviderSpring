@@ -25,8 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 
-import com.asp.eiyu.ldap.security.utils.AesUtil;
-import com.asp.eiyu.ldap.security.utils.AesUtil.OperationType;
+import com.asp.eiyu.ldap.utils.AesUtil;
+import com.asp.eiyu.ldap.utils.AesUtil.OperationType;
 
 /*
  * Oficial documentation
@@ -61,14 +61,12 @@ class LdapApplicationTests {
 	void contextLoads()  throws Exception{
 
 
-		/* 
+		 
 		String  value  = "admin";
 		assertEquals(value , aesUtil.doOperation(
 				aesUtil.doOperation(value, OperationType.ENCRYPT),
 					 OperationType.DECRYPT)  , " * Test * ");
-		*/
-
- 
+		
 		
 		String input = INPUT_TEST;
 		SecretKey secretKey = decodeBase64ToAESKey(this.keyAsString);

@@ -1,4 +1,4 @@
-package com.asp.eiyu.ldap.security.controller;
+package com.asp.eiyu.ldap.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

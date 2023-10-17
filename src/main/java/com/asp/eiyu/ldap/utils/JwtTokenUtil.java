@@ -1,4 +1,4 @@
-package com.asp.eiyu.ldap.security.utils;
+package com.asp.eiyu.ldap.utils;
 
 import java.io.Serializable;
 import java.util.Date;
