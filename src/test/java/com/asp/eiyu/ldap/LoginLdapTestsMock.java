@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.Assert;
 
+import com.asp.eiyu.ldap.controller.JwtAuthenticationController;
 import com.asp.eiyu.ldap.dto.LoginLdapRequest;
 import com.asp.eiyu.ldap.dto.LoginRequest;
 import com.asp.eiyu.ldap.mockserver.MockServerLdap;
@@ -89,7 +91,8 @@ public class LoginLdapTestsMock {
 
         this.mockMvc.perform( post("http://localhost:8070/authenticate").contentType(
             (MediaType.APPLICATION_JSON_VALUE.toString()))
-        .content(getObjectAsString("{\"username\":\"7KYE5kgtrAwLUUDtxQ/Xcg==\",\"password\":\"qkYJbWaqnvlbDPxg1d73ow==\"}")))
+        //.content("{\"username\":\"7KYE5kgtrAwLUUDtxQ/Xcg==\",\"password\":\"qkYJbWaqnvlbDPxg1d73ow==\"}"))
+        .content(getObjectAsString(loginRequest) ))
         .andExpect( status().isOk()  )
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect( jsonPath("$.token").isNotEmpty());
