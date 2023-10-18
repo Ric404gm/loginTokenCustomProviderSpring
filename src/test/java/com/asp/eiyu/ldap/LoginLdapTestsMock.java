@@ -97,9 +97,16 @@ public class LoginLdapTestsMock {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect( jsonPath("$.token").isNotEmpty());
         
+
+
         
 
-        //MvcResult result = 
+        this.mockMvc.perform( post("http://localhost:8070/authenticate").contentType(
+            (MediaType.APPLICATION_JSON_VALUE.toString()))
+        .content(getObjectAsString(loginRequest) ))
+        .andExpect( status().isUnauthorized()  );
+        
+        
 
     }
 
