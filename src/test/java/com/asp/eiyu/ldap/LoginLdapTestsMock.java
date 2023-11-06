@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.util.Assert;
 
 import com.asp.eiyu.ldap.controller.JwtAuthenticationController;
@@ -95,7 +96,8 @@ public class LoginLdapTestsMock {
         .content(getObjectAsString(loginRequest) ))
         .andExpect( status().isOk()  )
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect( jsonPath("$.token").isNotEmpty());
+        .andExpect( jsonPath("$.token").isNotEmpty())
+        .andDo(MockMvcResultHandlers.print());
         
 
 

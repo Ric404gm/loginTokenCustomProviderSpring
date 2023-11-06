@@ -64,7 +64,7 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 
-	private String doGenerateToken(Map<String, Object> claims, String subject) {
+	public String doGenerateToken(Map<String, Object> claims, String subject) {
 
 		return Jwts.builder().setClaims(claims).setSubject(subject)
 		.setIssuedAt(new Date(System.currentTimeMillis()))

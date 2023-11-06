@@ -1,6 +1,8 @@
 package com.asp.eiyu.ldap.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -60,7 +62,11 @@ public class JwtAuthenticationController {
 
 		LOGGER.info(" * Result From autentication : {}",authentication.toString() );
 		
-		final String token = jwtTokenUtil.generateToken(aesUtil.doOperation(
+		Map<String, Object> claims =  new  HashMap<>();
+		claims.put("current_token_user", aesUtil.doOperation( authenticationRequest.getUsername() , OperationType.DECRYPT));
+
+		
+		final String token = jwtTokenUtil.doGenerateToken(claims, aesUtil.doOperation(
 				 authenticationRequest.getUsername() , OperationType.DECRYPT));
 
 		return ResponseEntity.ok(new LoginResponse(token));
